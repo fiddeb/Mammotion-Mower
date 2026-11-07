@@ -1,0 +1,113 @@
+{
+  "title": "Mammotion Open API",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect Mammotion",
+        "description": "Enter client_id and client_secret from the Mammotion developer portal. Do not use your app password.",
+        "data": {
+          "client_id": "Client ID",
+          "client_secret": "Client secret"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Renew API credentials",
+        "description": "Enter client_id and client_secret from the Mammotion developer portal. Do not use your app password.",
+        "data": {
+          "client_id": "Client ID",
+          "client_secret": "Client secret"
+        }
+      },
+      "reconfigure": {
+        "title": "Update API credentials",
+        "description": "Enter client_id and client_secret from the Mammotion developer portal. Do not use your app password.",
+        "data": {
+          "client_id": "Client ID",
+          "client_secret": "Client secret"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Invalid API credentials or insufficient permission.",
+      "cannot_connect": "Could not connect to Mammotion. Try again later."
+    },
+    "abort": {
+      "already_configured": "This client ID is already configured.",
+      "reauth_successful": "API credentials updated.",
+      "reconfigure_successful": "Configuration updated.",
+      "unique_id_mismatch": "Use the same client ID as this integration."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Mammotion options",
+        "data": {
+          "poll_interval": "Polling interval (seconds)",
+          "enable_push": "Enable SSE for LUBA 3 AWD"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "battery": {
+        "name": "Battery"
+      },
+      "status": {
+        "name": "Status"
+      },
+      "firmware": {
+        "name": "Firmware"
+      },
+      "network": {
+        "name": "Network"
+      },
+      "wifi_ip": {
+        "name": "Wi-Fi IP address"
+      },
+      "wifi_signal": {
+        "name": "Wi-Fi signal"
+      },
+      "cellular_signal": {
+        "name": "Cellular signal"
+      }
+    },
+    "binary_sensor": {
+      "online": {
+        "name": "Online"
+      },
+      "charging": {
+        "name": "Charging"
+      },
+      "problem": {
+        "name": "Problem"
+      },
+      "wifi_available": {
+        "name": "Wi-Fi available"
+      },
+      "cellular_available": {
+        "name": "Cellular available"
+      }
+    },
+    "select": {
+      "task": {
+        "name": "Saved task"
+      }
+    },
+    "button": {
+      "start_task": {
+        "name": "Start selected task"
+      },
+      "resume": {
+        "name": "Resume"
+      },
+      "cancel_return": {
+        "name": "Cancel return to dock"
+      },
+      "refresh": {
+        "name": "Refresh"
+      }
+    }
+  }
+}

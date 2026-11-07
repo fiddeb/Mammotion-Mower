@@ -1,0 +1,82 @@
+start_task:
+  name: Start saved task
+  description: Start a task previously created in the Mammotion app.
+  target:
+    entity:
+      integration: mammotion_openapi
+      domain: lawn_mower
+  fields:
+    task_name:
+      name: Task name
+      required: true
+      example: Front lawn
+      selector:
+        text:
+send_command:
+  name: Send command
+  description: Send a documented mower command. START requires task_name.
+  target:
+    entity:
+      integration: mammotion_openapi
+      domain: lawn_mower
+  fields:
+    command:
+      name: Command
+      required: true
+      selector:
+        select:
+          options:
+            - CMD_START
+            - START
+            - PAUSE
+            - RESUME
+            - STOP
+            - RETURN
+            - CANCEL_RETURN
+    task_name:
+      name: Task name
+      description: Required for START.
+      selector:
+        text:
+get_error_history:
+  name: Get error history
+  description: Return one page of historical errors, including explanations and solutions.
+  target:
+    entity:
+      integration: mammotion_openapi
+      domain: lawn_mower
+  fields:
+    page_number:
+      name: Page number
+      default: 1
+      selector:
+        number:
+          min: 1
+          mode: box
+    page_size:
+      name: Page size
+      default: 10
+      selector:
+        number:
+          min: 1
+          max: 100
+          mode: box
+    start_date:
+      name: Start date
+      selector:
+        date:
+    end_date:
+      name: End date
+      selector:
+        date:
+    error_code:
+      name: Error code filter
+      selector:
+        text:
+get_work_parameters:
+  name: Get work parameters
+  description: Return current mowing parameters. The public API does not support editing them.
+  target:
+    entity:
+      integration: mammotion_openapi
+      domain: lawn_mower

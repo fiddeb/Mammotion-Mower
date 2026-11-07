@@ -1,0 +1,113 @@
+{
+  "title": "Mammotion Open API",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Anslut Mammotion",
+        "description": "Ange client_id och client_secret från Mammotions utvecklarportal. Använd inte ditt applösenord.",
+        "data": {
+          "client_id": "Client ID",
+          "client_secret": "Klienthemlighet"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Förnya API-uppgifter",
+        "description": "Ange client_id och client_secret från Mammotions utvecklarportal. Använd inte ditt applösenord.",
+        "data": {
+          "client_id": "Client ID",
+          "client_secret": "Klienthemlighet"
+        }
+      },
+      "reconfigure": {
+        "title": "Ändra API-uppgifter",
+        "description": "Ange client_id och client_secret från Mammotions utvecklarportal. Använd inte ditt applösenord.",
+        "data": {
+          "client_id": "Client ID",
+          "client_secret": "Klienthemlighet"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Ogiltiga API-uppgifter eller otillräcklig behörighet.",
+      "cannot_connect": "Kunde inte ansluta till Mammotion. Försök igen senare."
+    },
+    "abort": {
+      "already_configured": "Detta klient-ID är redan konfigurerat.",
+      "reauth_successful": "API-uppgifterna har uppdaterats.",
+      "reconfigure_successful": "Konfigurationen har uppdaterats.",
+      "unique_id_mismatch": "Använd samma klient-ID som för denna integration."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Mammotion-inställningar",
+        "data": {
+          "poll_interval": "Hämtningsintervall (sekunder)",
+          "enable_push": "Aktivera SSE för LUBA 3 AWD"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "battery": {
+        "name": "Batteri"
+      },
+      "status": {
+        "name": "Status"
+      },
+      "firmware": {
+        "name": "Firmware"
+      },
+      "network": {
+        "name": "Nätverk"
+      },
+      "wifi_ip": {
+        "name": "Wi-Fi IP-adress"
+      },
+      "wifi_signal": {
+        "name": "Wi-Fi-signal"
+      },
+      "cellular_signal": {
+        "name": "Mobilsignal"
+      }
+    },
+    "binary_sensor": {
+      "online": {
+        "name": "Ansluten"
+      },
+      "charging": {
+        "name": "Laddar"
+      },
+      "problem": {
+        "name": "Problem"
+      },
+      "wifi_available": {
+        "name": "Wi-Fi tillgängligt"
+      },
+      "cellular_available": {
+        "name": "Mobilnät tillgängligt"
+      }
+    },
+    "select": {
+      "task": {
+        "name": "Sparad uppgift"
+      }
+    },
+    "button": {
+      "start_task": {
+        "name": "Starta vald uppgift"
+      },
+      "resume": {
+        "name": "Återuppta"
+      },
+      "cancel_return": {
+        "name": "Avbryt hemkörning"
+      },
+      "refresh": {
+        "name": "Uppdatera"
+      }
+    }
+  }
+}
