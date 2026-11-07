@@ -8,6 +8,13 @@ API-underlag: [Mower APIs](https://developer.mammotion.com/apis/debug/mowing),
 [autentisering](https://developer.mammotion.com/docs/authorization) och den
 [publika OpenAPI-specifikationen](https://api-open.mammotion.com/api-docs).
 En kopia av specifikationen finns i [docs/mammotion-openapi.json](docs/mammotion-openapi.json).
+Autentiseringens separata schema finns i
+[docs/mammotion-authentication-openapi.json](docs/mammotion-authentication-openapi.json).
+
+Version **0.1.1** rättar ett inloggningsfel: token kan returneras inuti API-svarets `data`-fält.
+Om version 0.1.0 visar **Invalid API credentials or insufficient permission** trots
+korrekta utvecklaruppgifter, uppdatera med installationskommandot nedan och starta om
+Home Assistant. Försök sedan lägga till integrationen igen.
 
 ## Funktioner
 

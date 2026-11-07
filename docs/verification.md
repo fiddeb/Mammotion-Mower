@@ -1,8 +1,8 @@
-# Verifiering av 0.1.0
+# Verifiering av 0.1.1
 
 Verifierad lokalt 2026-11-08 på macOS med Python 3.14.8 och Home Assistant 2026.10.4.
 
-- `pytest -q`: **85 tester godkända**.
+- `pytest -q`: **93 tester godkända**.
 - `ruff check .` och `ruff format --check .`: godkända.
 - Home Assistants officiella hassfest från taggen `2026.10.4`: **1 integration, 0 ogiltiga**.
 - Separat kodgranskning genomförd; tre hittade kantfall rättade och regressionstestade.
@@ -16,6 +16,13 @@ Verifierad lokalt 2026-11-08 på macOS med Python 3.14.8 och Home Assistant 2026
   med mellanslag, avvisning av fel mål och symlänkar, installationslås samt återställning
   när ersättningen misslyckas. Ett mutationstest verifierar att testet upptäcker borttaget
   skydd mot att ersätta symlänkar.
+- Inloggningsfelet i 0.1.0 återskapades med ett lyckat tokensvar inuti `data`:
+  konfigurationsflödet visade felaktigt formuläret igen. Samma regressionstest passerar
+  med rättningen. Både det officiella Swagger-formatet och det platta OAuth-formatet
+  i kom-igång-guiden stöds, inklusive tokenens faktiska utgångstid.
+- Autentiseringskontraktet verifierades mot
+  `https://developer.mammotion.com/api/authentication_swagger.json` och sparades som
+  `docs/mammotion-authentication-openapi.json`.
 
 ## API-täckning
 
@@ -50,5 +57,5 @@ SSE-payloadformat återstår. De format som saknar schema exponeras som ursprung
 JSON-händelser, utan påhittade fälttolkningar eller mätenheter.
 
 Källfingeravtryck för integrationens `.py`, `.json` och `.yaml`-filer:
-`acf187d7d658af38dcb88ec48ce1e197c7daf5b7c4f0eb0f4c2c8ea0df9dc6b3`.
+`79b2cc53abf0f70960f65948a65b8f3329cd92c5aa65eb99ae3c1eb5a7f29c2d`.
 Beräknat med SHA-256 över sorterade relativa filnamn, NUL och filinnehåll per fil.

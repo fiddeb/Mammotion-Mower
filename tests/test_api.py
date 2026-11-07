@@ -48,6 +48,50 @@ async def test_expired_token_is_renewed(client, api_mock):
     assert sum(str(call[1]) == TOKEN_URL for call in api_mock.mock_calls) == 2
 
 
+@pytest.mark.parametrize("code", [0, 200])
+async def test_token_in_response_envelope_is_accepted_and_expiry_used(client, aioclient_mock, code):
+    aioclient_mock.post(
+        TOKEN_URL,
+        json={
+            "code": code,
+            "msg": "Success",
+            "data": {
+                "access_token": "wrapped-token",
+                "expires_in": 120,
+                "token_type": "Bearer",
+            },
+        },
+    )
+    aioclient_mock.get(API_URL + "/v1/mowers", json={"code": 0, "data": []})
+    with patch("custom_components.mammotion_openapi.api.monotonic", return_value=100):
+        assert await client.mowers() == []
+        assert client._expires == 208
+        assert await client.access_token() == "wrapped-token"
+    assert aioclient_mock.call_count == 2
+    assert aioclient_mock.mock_calls[-1][3]["Authorization"] == "Bearer wrapped-token"
+
+
+@pytest.mark.parametrize(
+    "payload",
+    [
+        {"code": 500, "data": {"access_token": "must-not-be-used"}},
+        {"code": 0, "data": None},
+        {"code": 0, "data": []},
+        {"code": 0, "data": {"refresh_token": "private-refresh-token"}},
+        {"expires_in": 3600},
+    ],
+)
+async def test_unexpected_token_response_is_not_misreported_as_bad_credentials(
+    client, aioclient_mock, payload
+):
+    aioclient_mock.post(TOKEN_URL, json=payload)
+    with pytest.raises(MammotionError) as raised:
+        await client.mowers()
+    assert not isinstance(raised.value, AuthenticationError)
+    assert "private-refresh-token" not in str(raised.value)
+    assert aioclient_mock.call_count == 1
+
+
 async def test_401_refreshes_once(client, aioclient_mock):
     aioclient_mock.post(TOKEN_URL, json={"access_token": "new-token", "expires_in": 3600})
     attempts = 0

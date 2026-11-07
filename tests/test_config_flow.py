@@ -22,6 +22,24 @@ async def test_user_form_and_setup(hass, api_mock):
     assert result["result"].unique_id == "test-client"
 
 
+async def test_setup_accepts_token_wrapped_in_data(hass, aioclient_mock):
+    aioclient_mock.post(
+        TOKEN_URL,
+        json={
+            "code": 0,
+            "data": {"access_token": "wrapped-token", "expires_in": 3600},
+        },
+    )
+    aioclient_mock.get(API_URL + "/v1/mowers", json={"code": 0, "data": []})
+    with patch("custom_components.mammotion_openapi.async_setup_entry", return_value=True):
+        result = await hass.config_entries.flow.async_init(
+            DOMAIN, context={"source": "user"}, data=CREDS
+        )
+        await hass.async_block_till_done()
+    assert result["type"] == FlowResultType.CREATE_ENTRY
+    assert result["data"] == CREDS
+
+
 @pytest.mark.parametrize("status,error", [(401, "invalid_auth"), (500, "cannot_connect")])
 async def test_invalid_credentials_or_connection(hass, aioclient_mock, status, error):
     aioclient_mock.post(TOKEN_URL, status=status)

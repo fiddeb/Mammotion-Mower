@@ -131,9 +131,15 @@ class MammotionClient:
                 ) as response:
                     self._check_status(response, token=True)
                     data = await response.json()
+                # The Swagger contract wraps tokens in {code, data}; the getting-started
+                # guide also shows a plain OAuth response. Accept both formats.
+                if isinstance(data, dict) and "code" in data:
+                    if data["code"] not in (0, 200):
+                        raise MammotionError("Mammotion reported an unsuccessful token response")
+                    data = data.get("data")
                 token = data.get("access_token") if isinstance(data, dict) else None
                 if not isinstance(token, str) or not token:
-                    raise AuthenticationError("Mammotion did not return an access token")
+                    raise MammotionError("Mammotion returned an unexpected token response")
                 expires = float(data.get("expires_in", 3600))
                 self._token = token
                 self._expires = monotonic() + max(1, expires - min(60, expires / 10))
